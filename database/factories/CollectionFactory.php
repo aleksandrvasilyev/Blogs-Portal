@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,9 @@ class CollectionFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'title' => fake()->word(),
+            'slug' => fake()->unique()->slug(),
+            'user_id' => User::factory(),
         ];
     }
 }

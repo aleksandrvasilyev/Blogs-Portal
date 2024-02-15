@@ -17,7 +17,10 @@ class AchievementFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'title' => fake()->unique()->word,
+            'slug' => fake()->unique()->slug,
+            'description' => fake()->text(),
+
         ];
     }
 }
