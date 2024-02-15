@@ -50,18 +50,17 @@ class User extends Authenticatable
 
     public function collections()
     {
-
+        return $this->hasMany(Collection::class);
     }
 
     public function comments()
     {
-
+        return $this->hasMany(Comment::class);
     }
-
 
     public function achievements()
     {
-        return $this->belongsToMany(Acvhievement::class);
+        return $this->belongsToMany(Achievement::class);
     }
 
 
