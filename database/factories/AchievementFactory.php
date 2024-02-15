@@ -18,7 +18,7 @@ class AchievementFactory extends Factory
     {
         return [
             'title' => fake()->unique()->word,
-            'slug' => fake()->unique()->slug,
+            'slug' => fake()->unique()->slug(3),
             'description' => fake()->text(),
 
         ];

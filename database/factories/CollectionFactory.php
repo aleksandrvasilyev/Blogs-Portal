@@ -18,8 +18,8 @@ class CollectionFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => fake()->word(),
-            'slug' => fake()->unique()->slug(),
+            'title' => fake()->words(3,true),
+            'slug' => fake()->unique()->slug(3),
             'user_id' => User::factory(),
         ];
     }
