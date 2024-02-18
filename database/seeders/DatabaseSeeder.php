@@ -7,10 +7,11 @@ use App\Models\Achievement;
 use App\Models\Category;
 use App\Models\Collection;
 use App\Models\Comment;
-use App\Models\CommentLike;
+use App\Models\Favorite;
+use App\Models\Follow;
+use App\Models\Hide;
 use App\Models\Like;
 use App\Models\Post;
-use App\Models\PostLike;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -65,6 +66,7 @@ class DatabaseSeeder extends Seeder
                 'user_id' => $user[0]->id
             ]);
 
+            // create n posts with existing user,
             Post::factory(5)->create([
                 'user_id' => $user[0]->id,
                 'collection_id' => function () use ($collection) {
@@ -72,6 +74,9 @@ class DatabaseSeeder extends Seeder
                 },
                 'category_id' => function () use ($categories) {
                     return $categories->pluck('id')->random();
+                },
+                'views' => function () {
+                    return rand(1, 1000);
                 }
             ])->each(function ($post) {
                 $post->tags()->attach(Tag::all()->random(rand(0, 3)));
@@ -79,61 +84,89 @@ class DatabaseSeeder extends Seeder
 
         }
 
+        // create n comments with existing users and posts
         Comment::factory(10)->create([
-            'user_id' => function () use ($categories) {
+            'user_id' => function () {
                 return User::all()->random();
             },
-            'post_id' => function () use ($categories) {
+            'post_id' => function () {
                 return Post::all()->random();
             },
         ]);
 
-//        PostLike::factory(10)->create([
-//            'user_id' => function () use ($categories) {
-//                return User::all()->random();
-//            },
-//            'post_id' => function () use ($categories) {
-//                return Post::all()->random();
-//            },
-//        ]);
+
+        // create n likes with existing users and objects
+//        for ($i = 1; $i <= 10; $i++) {
+//            $model = fake()->randomElement([Post::class, Comment::class]);
+//            $object = $model::all()->random();
 //
-//        CommentLike::factory(10)->create([
-//            'user_id' => function () use ($categories) {
-//                return User::all()->random();
-//            },
-//            'comment_id' => function () use ($categories) {
-//                return Comment::all()->random();
-//            },
-//        ]);
-//
-//        Likes::factory(10)->create([
-//            'user_id' => function () {
-//                return User::all()->random();
-//            },
-//            'likeable_id' => function () {
-//                return User::all()->random();
-//            },
-//            'likeable_type' => function () {
-//                return Comment::all()->random();
-//            },
-//        ]);
+//            Like::factory()->create([
+//                'user_id' => User::all()->random(),
+//                'likeable_id' => $object->id,
+//                'likeable_type' => $model,
+//            ]);
+//        }
 
 
-//        $likes = Likes::factory()->count(3)->for(
-//            Post::factory(), 'likeable'
-//        )->create();
+        // creates 3 users with 3 favorites records each
+        for ($i = 1; $i <= 3; $i++) {
+            $numbers = range(1, 15);
+            shuffle($numbers);
+            $randomNumbers = array_slice($numbers, 0, 3);
+            $posts = Post::whereIn('id', $randomNumbers)->get();
+
+            //Favorites
+            foreach ($posts as $post) {
+                Favorite::factory()->create([
+                    'user_id' => User::find($i),
+                    'post_id' => $post->id,
+                ]);
+            }
 
 
-        for ($i = 1; $i <= 10; $i++) {
+            // Likes
             $model = fake()->randomElement([Post::class, Comment::class]);
             $object = $model::all()->random();
-
             Like::factory()->create([
-                'user_id' => User::all()->random(),
+                'user_id' => User::find($i),
                 'likeable_id' => $object->id,
                 'likeable_type' => $model,
             ]);
+
+
+            // Hides
+            $model = fake()->randomElement([Tag::class, Category::class]);
+            $object = $model::all()->random();
+            Hide::factory()->create([
+                'user_id' => User::all()->random(),
+                'hideable_id' => $object->id,
+                'hideable_type' => $model,
+            ]);
+
+
+            // Follows
+            $model = fake()->randomElement([Tag::class, Category::class]);
+            $object = $model::all()->random();
+            Follow::factory()->create([
+                'user_id' => User::all()->random(),
+                'followable_id' => $object->id,
+                'followable_type' => $model,
+            ]);
         }
+
+
+//        // create n hides with existing users and objects
+//        for ($i = 1; $i <= 10; $i++) {
+//            $model = fake()->randomElement([Tag::class, Category::class]);
+//            $object = $model::all()->random();
+//
+//            Hide::factory()->create([
+//                'user_id' => User::all()->random(),
+//                'hideable_id' => $object->id,
+//                'hideable_type' => $model,
+//            ]);
+//        }
+
 
     }
 }

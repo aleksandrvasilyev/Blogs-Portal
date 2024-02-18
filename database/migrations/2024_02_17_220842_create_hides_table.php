@@ -11,17 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('follow', function (Blueprint $table) {
+        Schema::create('hides', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->index();
-            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
-
-            $table->morphs('followable');
-
-            $table->timestamp('accepted_at')->nullable();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->morphs('hideable');
             $table->timestamps();
 
-            $table->index(['accepted_at']);
+            $table->unique(['user_id', 'hideable_id', 'hideable_type']);
         });
     }
 
@@ -30,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('follow');
+        Schema::dropIfExists('hides');
     }
 };

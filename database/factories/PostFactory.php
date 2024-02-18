@@ -29,6 +29,7 @@ class PostFactory extends Factory
             'body' => fake()->paragraphs(5, true),
             'thumbnail' => fake()->imageUrl(640, 640, 'post'),
             'status' => 'published',
+            'views' => 1,
             'pinned' => false,
             'edited' => false,
 

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Post extends Model
 {
@@ -34,10 +35,15 @@ class Post extends Model
         return $this->hasMany(Comment::class);
     }
 
-
     public function likes()
     {
         return $this->morphMany(Like::class, 'likeable');
     }
+
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class);
+    }
+
 
 }

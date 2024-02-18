@@ -63,10 +63,23 @@ class User extends Authenticatable
         return $this->belongsToMany(Achievement::class);
     }
 
-
     public function likes()
     {
         return $this->hasMany(Like::class);
     }
+
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class);
+    }
+    public function hides()
+    {
+        return $this->hasMany(Hide::class);
+    }
+
+//    public function hided()
+//    {
+//        return $this->morphMany(Hide::class, 'hideable');
+//    }
 
 }

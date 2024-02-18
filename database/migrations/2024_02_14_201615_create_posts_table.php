@@ -15,21 +15,17 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('slug');
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->unsignedBigInteger('category_id');
-            $table->foreign('category_id')->references('id')->on('categories')->nullOnDelete();
-            $table->unsignedBigInteger('collection_id')->nullable();
-            $table->foreign('collection_id')->references('id')->on('collections')->nullOnDelete();
-            $table->text('excerpt');
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('category_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('collection_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->text('excerpt')->nullable();
             $table->text('body');
             $table->string('thumbnail')->nullable();
             $table->string('status');
+            $table->integer('views');
             $table->boolean('pinned');
             $table->boolean('edited');
-
             $table->timestamps();
-
             $table->unique(['slug', 'user_id']);
         });
     }

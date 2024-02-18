@@ -13,4 +13,14 @@ class Tag extends Model
     {
         return $this->belongsToMany(Post::class);
     }
+    public function hides()
+    {
+        return $this->morphMany(Hide::class, 'hideable');
+    }
+
+    public function follows()
+    {
+        return $this->morphMany(Follow::class, 'followable');
+    }
+
 }
