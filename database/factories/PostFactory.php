@@ -32,7 +32,6 @@ class PostFactory extends Factory
             'views' => 1,
             'pinned' => false,
             'edited' => false,
-
         ];
     }
 }
