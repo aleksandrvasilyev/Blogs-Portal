@@ -2,28 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePostRequest;
 use App\Models\Post;
+use App\Services\PostService;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-    public function store(Request $request)
+    protected $postService;
+
+    public function __construct(PostService $postService)
     {
-        $validatedData = $request->validate([
-            'title' => 'required|string|max:255',
-            'body' => 'required|string',
-            'slug' => 'required|string',
-            'user_id' => 'integer',
-            'category_id' => 'integer',
-            'status' => 'string',
-            'views' => 'integer',
-            'pinned' => 'boolean',
-            'edited' => 'boolean'
-        ]);
+        $this->postService = $postService;
+    }
 
-        Post::create($validatedData);
-
+    public function store(StorePostRequest $request)
+    {
+        $this->postService->create($request->validated());
         return response('Post created successfully', 201);
-
     }
 }
