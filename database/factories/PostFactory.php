@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Category;
-use App\Models\Collection;
+use App\Models\Group;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -24,7 +24,7 @@ class PostFactory extends Factory
             'slug' => fake()->unique()->slug('4'),
             'user_id' => User::factory(),
             'category_id' => Category::factory(),
-            'collection_id' => Collection::factory(),
+            'group_id' => Group::factory(),
             'excerpt' => fake()->paragraph(),
             'body' => fake()->paragraphs(5, true),
             'thumbnail' => fake()->imageUrl(640, 640, 'post'),

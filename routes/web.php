@@ -18,4 +18,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('posts', PostController::class);
+Route::resource('posts', PostController::class)->except(['show', 'store']);
+
+Route::get('{user}/{post}', [PostController::class, 'show'])->name('posts.show');
+Route::post('/posts', [PostController::class, 'store'])->name('posts.store')->middleware('auth');
+
+Route::get('login', [AuthController::class, 'create'])->name('login');

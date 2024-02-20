@@ -4,11 +4,14 @@ namespace App\Services;
 
 
 use App\Models\Post;
+
 class PostService
 {
-    public function create(array $data): Post
+
+    public function index()
     {
-        return Post::create($data);
+        return Post::paginate(10);
     }
+
 
 }

@@ -5,7 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Achievement;
 use App\Models\Category;
-use App\Models\Collection;
+use App\Models\Group;
 use App\Models\Comment;
 use App\Models\Favorite;
 use App\Models\Follow;
@@ -32,7 +32,7 @@ class DatabaseSeeder extends Seeder
 
         $users = User::factory(10)->create();
 
-//        $collections = Collection::factory(50)->recycle($users)->create();
+//        $groups = Group::factory(50)->recycle($users)->create();
 
         $posts = Post::factory(100)->recycle($users)->recycle($categories)->create();
 
@@ -67,9 +67,9 @@ class DatabaseSeeder extends Seeder
 //        // create 5 users
 //        User::factory(5)->create()->each(function ($user) {
 //
-//            // user create 1-2 collections
-//            $user->collections()->createMany(
-//                Collection::factory(rand(0, 1))->make([
+//            // user create 1-2 groups
+//            $user->groups()->createMany(
+//                Group::factory(rand(0, 1))->make([
 //                    'user_id' => $user->id
 //                ])->toArray()
 //            );
@@ -82,9 +82,9 @@ class DatabaseSeeder extends Seeder
 //                    'category_id' => function () {
 //                        return Category::all()->random();
 //                    },
-//                    // set 0-1 collections to a post from existing user's collection
-//                    'collection_id' => function () use ($user) {
-//                        return rand(0, 1) === 0 ? null : Collection::where('user_id', $user->id)->inRandomOrder()->first();
+//                    // set 0-1 groups to a post from existing user's groups
+//                    'group_id' => function () use ($user) {
+//                        return rand(0, 1) === 0 ? null : Group::where('user_id', $user->id)->inRandomOrder()->first();
 //                    },
 //                ])
 //                    ->toArray()

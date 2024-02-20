@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePostRequest;
 use App\Models\Post;
+use App\Models\User;
 use App\Services\PostService;
 use Illuminate\Http\Request;
 
@@ -18,7 +19,22 @@ class PostController extends Controller
 
     public function store(StorePostRequest $request)
     {
-        $this->postService->create($request->validated());
-        return response('Post created successfully', 201);
+        $request->validated()['user_id'] = auth()->user();
+
+        auth()->user()->posts()->create($request->validated());
+
+        return redirect('/posts', 201);
+    }
+
+    public function index()
+    {
+        $posts = $this->postService->index();
+        return view('posts.index', compact('posts'));
+    }
+
+    public function show(User $user, Post $post)
+    {
+        $post = Post::where('user_id', $user->id)->where('slug', $post->slug)->firstOrFail();
+        return view('posts.show', compact('post'));
     }
 }

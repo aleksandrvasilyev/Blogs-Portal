@@ -12,6 +12,12 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+
+    public function getRouteKeyName(): string
+    {
+        return 'username';
+    }
+
     /**
      * The attributes that are mass assignable.
      *
@@ -48,9 +54,9 @@ class User extends Authenticatable
         return $this->hasMany(Post::class);
     }
 
-    public function collections()
+    public function groups()
     {
-        return $this->hasMany(Collection::class);
+        return $this->hasMany(Group::class);
     }
 
     public function comments()

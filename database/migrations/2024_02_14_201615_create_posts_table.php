@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('slug');
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('category_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('collection_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->foreignId('group_id')->nullable()->constrained()->cascadeOnDelete();
             $table->text('excerpt')->nullable();
             $table->text('body');
             $table->string('thumbnail')->nullable();

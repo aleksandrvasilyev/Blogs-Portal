@@ -11,6 +11,17 @@ class Post extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
+    public function path()
+    {
+        return '/'.$this->author->username.'/'.$this->slug;
+    }
+
     public function author()
     {
         return $this->belongsTo(User::class, 'user_id');
@@ -21,9 +32,9 @@ class Post extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function collection()
+    public function group()
     {
-        return $this->belongsTo(Collection::class);
+        return $this->belongsTo(Group::class);
     }
 
     public function tags()
