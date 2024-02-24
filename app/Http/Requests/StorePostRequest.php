@@ -2,7 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Post;
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StorePostRequest extends FormRequest
 {
@@ -11,6 +14,10 @@ class StorePostRequest extends FormRequest
      */
     public function authorize(): bool
     {
+        if(!auth()->user()) {
+            return false;
+        }
+
         return true;
     }
 
@@ -24,7 +31,7 @@ class StorePostRequest extends FormRequest
         return [
             'title' => 'required|string|max:255',
             'body' => 'required|string',
-            'slug' => 'required|string',
+            'slug' => ['required', 'string', 'max:255', Rule::unique(Post::class)->ignore($this->id)],
             'user_id' => 'integer',
             'category_id' => 'integer',
             'status' => 'string',

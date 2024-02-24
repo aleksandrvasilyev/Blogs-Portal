@@ -11,7 +11,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class MyTest extends TestCase
+class AppTest extends TestCase
 {
 
     use LazilyRefreshDatabase;
@@ -24,7 +24,7 @@ class MyTest extends TestCase
         $user = User::factory()->create();
         $post = Post::factory()->raw();
 
-        $this->actingAs($user)->post(route('posts.store'), $post)->assertRedirect('/posts');
+        $this->actingAs($user)->post(route('profile.posts.store'), $post)->assertRedirect('/posts');
 
         $this->assertDatabaseHas('posts', [
             'title' => $post['title'],
@@ -40,7 +40,7 @@ class MyTest extends TestCase
         $user = User::factory()->create();
 
         $post = Post::factory()->raw(['title' => '']);
-        $this->actingAs($user)->post(route('posts.store'), $post)->assertSessionHasErrors('title');
+        $this->actingAs($user)->post(route('profile.posts.store'), $post)->assertSessionHasErrors('title');
     }
 
     public function test_a_user_can_view_a_post()

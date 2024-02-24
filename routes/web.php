@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\AuthPostController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,13 +16,35 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+
+//Route::get('/', function () {
+//    return view('welcome');
+//});
+
+
+Route::get('/', [PostController::class, 'index'])->name('posts.index');
+Route::get('{user}/{post}', [PostController::class, 'show'])->name('posts.show');
+
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile/posts', [AuthPostController::class, 'index'])->name('profile.posts.index');
+    Route::post('/posts', [AuthPostController::class, 'store'])->name('profile.posts.store');
+    Route::get('/posts/{post:id}/edit', [AuthPostController::class, 'edit'])->name('profile.posts.edit');
+    Route::patch('/posts/{post:id}', [AuthPostController::class, 'update'])->name('profile.posts.update');
 });
 
-Route::resource('posts', PostController::class)->except(['show', 'store']);
 
-Route::get('{user}/{post}', [PostController::class, 'show'])->name('posts.show');
-Route::post('/posts', [PostController::class, 'store'])->name('posts.store')->middleware('auth');
+Route::get('/dashboard', [ProfileController::class, 'index'])
+    ->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('login', [AuthController::class, 'create'])->name('login');
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__ . '/auth.php';
+
+
+
+

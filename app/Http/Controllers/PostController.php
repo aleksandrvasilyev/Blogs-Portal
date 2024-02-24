@@ -17,15 +17,6 @@ class PostController extends Controller
         $this->postService = $postService;
     }
 
-    public function store(StorePostRequest $request)
-    {
-        $request->validated()['user_id'] = auth()->user();
-
-        auth()->user()->posts()->create($request->validated());
-
-        return redirect('/posts', 201);
-    }
-
     public function index()
     {
         $posts = $this->postService->index();
