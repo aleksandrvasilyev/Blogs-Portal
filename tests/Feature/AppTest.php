@@ -19,12 +19,11 @@ class AppTest extends TestCase
 
     public function test_a_user_can_create_a_post()
     {
-
         $this->withoutExceptionHandling(); // show exceptions!
         $user = User::factory()->create();
         $post = Post::factory()->raw();
 
-        $this->actingAs($user)->post(route('profile.posts.store'), $post)->assertRedirect('/posts');
+        $this->actingAs($user)->post(route('profile.posts.store'), $post)->assertRedirect(route('dashboard'));
 
         $this->assertDatabaseHas('posts', [
             'title' => $post['title'],
@@ -61,12 +60,34 @@ class AppTest extends TestCase
     }
 
 
-    public function test_only_auth_user_can_create_a_post()
+    public function test_guest_cannot_create_a_post()
     {
-
-        $attributes = Post::factory()->raw();
-        $this->post('/posts', $attributes)->assertRedirect('login');
+        $post = Post::factory()->raw();
+        $this->post('/posts', $post)->assertRedirect(route('login'));
     }
+
+    public function test_guest_cannot_view_edit_form_post()
+    {
+        $post = Post::factory()->create();
+        $this->get(route('profile.posts.edit', $post->id))->assertRedirect(route('login'));
+    }
+
+    public function test_auth_user_can_view_edit_post_form()
+    {
+        $user = User::factory()->create();
+        $post = Post::factory()->create(['user_id' => $user->id]);
+        $this->be($user);
+        $response = $this->get(route('profile.posts.edit', $post));
+        $response->assertStatus(200);
+
+    }
+
+    public function test_a_post_belongs_to_user()
+    {
+        $post = Post::factory()->create();
+        $this->assertInstanceOf(User::class, $post->author);
+    }
+
 
     public function test_a_user_has_posts()
     {

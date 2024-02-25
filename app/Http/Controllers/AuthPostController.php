@@ -11,17 +11,18 @@ class AuthPostController
 {
     public function store(StorePostRequest $request)
     {
+        dd(request()->all());
         $request->validated()['user_id'] = auth()->user();
 
         auth()->user()->posts()->create($request->validated());
 
-        return redirect('/posts', 201);
+        return redirect('/dashboard', 201);
     }
 
     public function edit(Post $post)
     {
         $post = Post::where('user_id', auth()->user()->id)->where('id', $post->id)->firstOrFail();
-        return view('components.post-edit', compact('post'));
+        return view('posts.edit', compact('post'));
 
     }
 
@@ -33,7 +34,6 @@ class AuthPostController
 
     public function update(UpdatePostRequest $request)
     {
-//        dd($request->id);
 
         $post = Post::where('user_id', auth()->user()->id)->where('id', $request->id)->firstOrFail();
 
@@ -46,5 +46,10 @@ class AuthPostController
         return back()->with('success', 'Post Updated!');
 
 
+    }
+
+    public function create()
+    {
+        return view('posts.create');
     }
 }

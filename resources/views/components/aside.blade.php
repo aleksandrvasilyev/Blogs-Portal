@@ -3,97 +3,41 @@
         <section aria-labelledby="who-to-follow-heading">
             <div class="rounded-lg bg-white shadow">
                 <div class="p-6">
-                    <h2 id="who-to-follow-heading" class="text-base font-medium text-gray-900">Who to
-                        follow</h2>
+                    <h2 id="who-to-follow-heading" class="text-base font-medium text-gray-900">
+                        Who to follow</h2>
                     <div class="mt-6 flow-root">
                         <ul role="list" class="-my-4 divide-y divide-gray-200">
+                            @foreach(App\Models\User::inRandomOrder()->take(3)->get() as $user)
 
-                            <li class="flex items-center space-x-3 py-4">
-                                <div class="flex-shrink-0">
-                                    <img class="h-8 w-8 rounded-full"
-                                         src="https://images.unsplash.com/photo-1519345182560-3f2917c472ef?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=2&amp;w=256&amp;h=256&amp;q=80"
-                                         alt="">
-                                </div>
-                                <div class="min-w-0 flex-1">
-                                    <p class="text-sm font-medium text-gray-900">
-                                        <a href="javascript:void(0)">Leonard Krasner</a>
-                                    </p>
-                                    <p class="text-sm text-gray-500">
-                                        <a href="javascript:void(0)">@leonardkrasner</a>
-                                    </p>
-                                </div>
-                                <div class="flex-shrink-0">
-                                    <button type="button"
-                                            class="inline-flex items-center rounded-full bg-rose-50 px-3 py-0.5 text-sm font-medium text-rose-700 hover:bg-rose-100">
-                                        <svg class="-ml-1 mr-0.5 h-5 w-5 text-rose-400"
-                                             x-description="Heroicon name: mini/plus"
-                                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                                             fill="currentColor" aria-hidden="true">
-                                            <path
-                                                d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z"></path>
-                                        </svg>
-                                        <span>Follow</span>
-                                    </button>
-                                </div>
-                            </li>
+                                <li class="flex items-center space-x-3 py-4">
+                                    <div class="flex-shrink-0">
+                                        <img class="h-8 w-8 rounded-full"
+                                             src="{{ $user->photo }}"
+                                             alt="">
+                                    </div>
+                                    <div class="min-w-0 flex-1">
+                                        <p class="text-sm font-medium text-gray-900">
+                                            <a href="javascript:void(0)">{{ $user->name }}</a>
+                                        </p>
+                                        <p class="text-sm text-gray-500">
+                                            <a href="javascript:void(0)">{{ $user->username }}</a>
+                                        </p>
+                                    </div>
+                                    <div class="flex-shrink-0">
+                                        <button type="button"
+                                                class="inline-flex items-center rounded-full bg-green-50 px-3 py-0.5 text-sm font-medium text-green-700 hover:bg-green-100">
+                                            <svg class="-ml-1 mr-0.5 h-5 w-5 text-green-400"
+                                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                                 fill="currentColor" aria-hidden="true">
+                                                <path
+                                                    d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z"></path>
+                                            </svg>
 
-                            <li class="flex items-center space-x-3 py-4">
-                                <div class="flex-shrink-0">
-                                    <img class="h-8 w-8 rounded-full"
-                                         src="https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=2&amp;w=256&amp;h=256&amp;q=80"
-                                         alt="">
-                                </div>
-                                <div class="min-w-0 flex-1">
-                                    <p class="text-sm font-medium text-gray-900">
-                                        <a href="javascript:void(0)">Floyd Miles</a>
-                                    </p>
-                                    <p class="text-sm text-gray-500">
-                                        <a href="javascript:void(0)">@floydmiles</a>
-                                    </p>
-                                </div>
-                                <div class="flex-shrink-0">
-                                    <button type="button"
-                                            class="inline-flex items-center rounded-full bg-rose-50 px-3 py-0.5 text-sm font-medium text-rose-700 hover:bg-rose-100">
-                                        <svg class="-ml-1 mr-0.5 h-5 w-5 text-rose-400"
-                                             x-description="Heroicon name: mini/plus"
-                                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                                             fill="currentColor" aria-hidden="true">
-                                            <path
-                                                d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z"></path>
-                                        </svg>
-                                        <span>Follow</span>
-                                    </button>
-                                </div>
-                            </li>
-
-                            <li class="flex items-center space-x-3 py-4">
-                                <div class="flex-shrink-0">
-                                    <img class="h-8 w-8 rounded-full"
-                                         src="https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=2&amp;w=256&amp;h=256&amp;q=80"
-                                         alt="">
-                                </div>
-                                <div class="min-w-0 flex-1">
-                                    <p class="text-sm font-medium text-gray-900">
-                                        <a href="javascript:void(0)">Emily Selman</a>
-                                    </p>
-                                    <p class="text-sm text-gray-500">
-                                        <a href="javascript:void(0)">@emilyselman</a>
-                                    </p>
-                                </div>
-                                <div class="flex-shrink-0">
-                                    <button type="button"
-                                            class="inline-flex items-center rounded-full bg-rose-50 px-3 py-0.5 text-sm font-medium text-rose-700 hover:bg-rose-100">
-                                        <svg class="-ml-1 mr-0.5 h-5 w-5 text-rose-400"
-                                             x-description="Heroicon name: mini/plus"
-                                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                                             fill="currentColor" aria-hidden="true">
-                                            <path
-                                                d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z"></path>
-                                        </svg>
-                                        <span>Follow</span>
-                                    </button>
-                                </div>
-                            </li>
+                                            <span>Follow</span>
+                                        </button>
+                                    </div>
+                                </li>
+                            @endforeach
 
                         </ul>
                     </div>

@@ -59,49 +59,17 @@
 
         </div>
         <div class="pt-10">
-            <p class="px-3 text-sm font-medium text-gray-500" id="communities-headline">Communities</p>
+
+
+            <p class="px-3 text-sm font-medium text-gray-500" id="communities-headline">Categories</p>
             <div class="mt-3 space-y-2" aria-labelledby="communities-headline">
+                @foreach(App\Models\Category::all() as $category)
 
-                <a href="javascript:void(0)"
-                   class="group flex items-center rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900">
-                    <span class="truncate">Movies</span>
-                </a>
-
-                <a href="javascript:void(0)"
-                   class="group flex items-center rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900">
-                    <span class="truncate">Food</span>
-                </a>
-
-                <a href="javascript:void(0)"
-                   class="group flex items-center rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900">
-                    <span class="truncate">Sports</span>
-                </a>
-
-                <a href="javascript:void(0)"
-                   class="group flex items-center rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900">
-                    <span class="truncate">Animals</span>
-                </a>
-
-                <a href="javascript:void(0)"
-                   class="group flex items-center rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900">
-                    <span class="truncate">Science</span>
-                </a>
-
-                <a href="javascript:void(0)"
-                   class="group flex items-center rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900">
-                    <span class="truncate">Dinosaurs</span>
-                </a>
-
-                <a href="javascript:void(0)"
-                   class="group flex items-center rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900">
-                    <span class="truncate">Talents</span>
-                </a>
-
-                <a href="javascript:void(0)"
-                   class="group flex items-center rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900">
-                    <span class="truncate">Gaming</span>
-                </a>
-
+                    <a href="{{ route('category.show', $category->slug) }}"
+                       class="group flex items-center rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900">
+                        <span class="truncate">{{ ucwords($category->name) }}</span>
+                    </a>
+                @endforeach
 
             </div>
 

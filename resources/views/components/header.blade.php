@@ -54,8 +54,8 @@ Heroicon name: outline/x-mark" x-state:on="Menu open" x-state:off="Menu closed" 
                 </button>
             </div>
             <div class="hidden lg:flex lg:items-center lg:justify-end xl:col-span-4">
-                <a href="javascript:void(0)" class="text-sm font-medium text-gray-900 hover:underline">Go
-                    Premium</a>
+                <a href="javascript:void(0)" class="text-sm font-medium text-gray-900 hover:underline">
+                    Go Premium</a>
                 <a href="javascript:void(0)"
                    class="ml-5 flex-shrink-0 rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2">
                     <span class="sr-only">View notifications</span>
@@ -129,9 +129,9 @@ Heroicon name: outline/x-mark" x-state:on="Menu open" x-state:off="Menu closed" 
 
                 </div>
 
-                <a href="javascript:void(0)"
-                   class="ml-6 inline-flex items-center rounded-md border border-transparent bg-rose-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-rose-700 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2">New
-                    Post</a>
+                <a href="{{ route('profile.posts.create') }}"
+                   class="ml-6 inline-flex items-center rounded-md border border-transparent bg-rose-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-rose-700 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2">
+                    New Post</a>
             </div>
         </div>
     </div>
@@ -195,13 +195,13 @@ Heroicon name: outline/x-mark" x-state:on="Menu open" x-state:off="Menu closed" 
         </div>
 
         <div class="mx-auto mt-6 max-w-3xl px-4 sm:px-6">
-            <a href="javascript:void(0)"
-               class="flex w-full items-center justify-center rounded-md border border-transparent bg-rose-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-rose-700">New
-                Post</a>
+            <a href="{{ route('profile.posts.create') }}"
+               class="flex w-full items-center justify-center rounded-md border border-transparent bg-rose-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-rose-700">
+                New Post</a>
 
             <div class="mt-6 flex justify-center">
                 <a href="javascript:void(0)" class="text-base font-medium text-gray-900 hover:underline">Go
-                    Premium</a>
+                    s {{ route('profile.posts.create') }}</a>
             </div>
         </div>
     </nav>

@@ -97,7 +97,7 @@
 
                 </div>
             </div>
-            <h2 id="question-title-41387" class="mt-4 text-base font-medium text-2xl text-gray-900">
+            <h2 id="question-title-41387" class="mt-4 font-medium text-2xl text-gray-900 hover:text-rose-600">
                 <a href="{{ $post->path() }}">{{ $post->title }}</a>
             </h2>
         </div>
@@ -156,15 +156,8 @@
             </div>
             <div class="flex text-sm">
                         <span class="inline-flex items-center text-sm">
-                          <button type="button" class="inline-flex space-x-2 text-gray-400 hover:text-gray-500">
-                            <svg class="h-5 w-5" x-description="Heroicon name: mini/share"
-                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-                                 aria-hidden="true">
-  <path
-      d="M13 4.5a2.5 2.5 0 11.702 1.737L6.97 9.604a2.518 2.518 0 010 .792l6.733 3.367a2.5 2.5 0 11-.671 1.341l-6.733-3.367a2.5 2.5 0 110-3.475l6.733-3.366A2.52 2.52 0 0113 4.5z"></path>
-</svg>
-                            <span class="font-medium text-gray-900">Share</span>
-                          </button>
+                            <span class="font-medium text-gray-900 hover:underline"><a
+                                    href="{{ route('category.show', $post->category->slug) }}">{{ $post->category->name }}</a></span>
                         </span>
             </div>
         </div>

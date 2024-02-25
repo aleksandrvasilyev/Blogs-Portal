@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthPostController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -24,13 +25,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PostController::class, 'index'])->name('posts.index');
 Route::get('{user}/{post}', [PostController::class, 'show'])->name('posts.show');
+Route::get('category/{category}', [CategoryController::class, 'show'])->name('category.show');
 
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile/posts', [AuthPostController::class, 'index'])->name('profile.posts.index');
+    Route::get('/create', [AuthPostController::class, 'create'])->name('profile.posts.create');
     Route::post('/posts', [AuthPostController::class, 'store'])->name('profile.posts.store');
     Route::get('/posts/{post:id}/edit', [AuthPostController::class, 'edit'])->name('profile.posts.edit');
-    Route::patch('/posts/{post:id}', [AuthPostController::class, 'update'])->name('profile.posts.update');
+    Route::post('/posts/{post:id}', [AuthPostController::class, 'update'])->name('profile.posts.update');
+
 });
 
 

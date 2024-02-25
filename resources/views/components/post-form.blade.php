@@ -1,39 +1,43 @@
-@props(['post'])
+@props(['post', 'route'])
 
 <li class="bg-white px-4 py-6 shadow sm:rounded-lg sm:p-6">
     <article>
         <div class="flex items-center">
             <div class="mx-auto w-full">
-                <form action="{{ route('profile.posts.update', $post) }}" method="POST">
+                <form action="{{ $route }}" method="POST">
                     @csrf
-                    @method('PATCH')
-                    <input type="hidden" name="id" value="{{ $post->id }}">
+                    <input type="hidden" name="id" value="{{ $post->id ?? '' }}">
+                    <input type="hidden" name="views" value="{{ $post->views ?? 1 }}">
+                    <input type="hidden" name="pinned" value="{{ $post->pinned ?? false }}">
 
-                    <x-form.input name="title" type="text" :value="old('title', $post->title)"/>
-                    <x-form.input name="slug" type="text" :value="old('slug', $post->slug)"/>
+                    <x-form.input name="title" type="text" :value="old('title', $post->title ?? '')"/>
+                    <x-form.input name="slug" type="text" :value="old('slug', $post->slug ?? '')"/>
 
-                    <x-form.textarea name="excerpt">{{ old('excerpt', $post->excerpt) }}</x-form.textarea>
-                    <x-form.textarea name="body">{{ old('excerpt', $post->body) }}</x-form.textarea>
+                    <x-form.textarea name="excerpt">{{ old('excerpt', $post->excerpt ?? '') }}</x-form.textarea>
+                    <x-form.textarea name="body">{{ old('excerpt', $post->body ?? '') }}</x-form.textarea>
 
 
                     <div class="mb-5 w-64">
-                        <label for="categories" class="block mb-2 text-gray-900">Category</label>
-                        <select id="categories"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <label for="category_id" class="block mb-2 text-gray-900">Category</label>
+                        <select id="category_id"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                name="category_id"
+                        >
                             <option selected>Category</option>
                             @foreach(\App\Models\Category::all() as $category)
                                 <option value="{{ $category->id }}"
-                                        @if($category->id === $post->category->id) selected @endif>{{ $category->name }}</option>
+                                        @if(isset($post) && $category->id === $post->category->id) selected @endif>{{ $category->name ?? '' }}</option>
                             @endforeach
                         </select>
                     </div>
 
-                    <div class="mb-2">Tags</div>
                     <div class="w-64 mb-5">
-                        <select multiple x-data="multiselect">
-                            <optgroup label="Tags">
+                        <label for="tags" class="block mb-2">Tags</label>
+                        <select id="tags" name="tags[]" multiple x-data="multiselect">
+                            <optgroup label="tags">
                                 @foreach(\App\Models\Tag::all() as $tag)
-                                    <option value="{{ $tag->id }}" @if($post->tags->pluck('id')->contains($tag->id)) selected @endif >{{ $tag->name }}</option>
+                                    <option value="{{ $tag->id ?? '' }}"
+                                            @if(isset($post) && $post->tags->pluck('id')->contains($tag->id)) selected @endif >{{ $tag->name ?? ''}}</option>
                                 @endforeach
                             </optgroup>
                         </select>
@@ -41,7 +45,7 @@
 
 
                     <div class="grid lg:grid-cols-5">
-                        <div class="mb-12 lg:col-span-4">
+                        <div class="mb-5 lg:col-span-4">
                             <label for="thumbnail" class="mb-3 pb-3">
                                 Thumbnail
                             </label>
@@ -52,9 +56,26 @@
                             />
                         </div>
                         <div class="lg:col-span-1 pl-2">
-                            <img alt="" src="{{ $post->thumbnail }}">
+                            <img alt="" src="{{ $post->thumbnail ?? '' }}">
                         </div>
                     </div>
+
+                    <div class="mb-5 w-64">
+                        <label for="status" class="block mb-2 text-gray-900">Status</label>
+                        <select id="status"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                name="status"
+                        >
+                            <option selected>Status</option>
+                            <option value="published"
+                                    @if(isset($post) && $post->status === 'published') selected @endif>Published
+                            </option>
+                            <option value="draft" @if(isset($post) && $post->status === 'draft') selected @endif>Draft
+                            </option>
+
+                        </select>
+                    </div>
+
 
                     <div>
                         <button
@@ -63,6 +84,51 @@
                             Submit
                         </button>
                     </div>
+
+                    @error('title')
+                    <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                    @enderror
+
+                    @error('slug')
+                    <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                    @enderror
+
+                    @error('excerpt')
+                    <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                    @enderror
+
+                    @error('body')
+                    <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                    @enderror
+
+                    @error('user_id')
+                    <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                    @enderror
+
+                    @error('category_id')
+                    <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                    @enderror
+
+                    @error('status')
+                    <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                    @enderror
+
+                    @error('views')
+                    <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                    @enderror
+
+                    @error('pinned')
+                    <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                    @enderror
+
+                    @error('edited')
+                    <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                    @enderror
+
+                    @error('thumbnail')
+                    <p class="text-red-500 text-xs mt-2">{{ $message }}</p>
+                    @enderror
+
                 </form>
             </div>
         </div>
