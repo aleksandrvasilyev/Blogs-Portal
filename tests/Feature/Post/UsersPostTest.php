@@ -6,11 +6,11 @@ namespace Tests\Feature\Post;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Tests\TestCase;
 
-class AuthenticatedUsersPostTest extends TestCase
+class UsersPostTest extends TestCase
 {
     use LazilyRefreshDatabase;
 
-    // backend
+    // admin page
 
     // his posts
         // positive
@@ -39,7 +39,7 @@ class AuthenticatedUsersPostTest extends TestCase
             // D // test_user_cannot_delete_non_existing_post
 
 
-    // frontend
+    // home page
         // his posts
             // positive
                 // C -
