@@ -12,11 +12,6 @@ class Post extends Model
 
     protected $guarded = [];
 
-    public function getRouteKeyName(): string
-    {
-        return 'slug';
-    }
-
     public function path()
     {
         return '/'.$this->author->username.'/'.$this->slug;
