@@ -10,7 +10,7 @@ class PostService
 
     public function index()
     {
-        return Post::paginate(10);
+        return Post::where('status', 'published')->paginate(10);
     }
 
 

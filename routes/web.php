@@ -32,7 +32,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/create', [AuthPostController::class, 'create'])->name('profile.posts.create');
     Route::post('/posts', [AuthPostController::class, 'store'])->name('profile.posts.store');
     Route::get('/posts/{post:id}/edit', [AuthPostController::class, 'edit'])->name('profile.posts.edit');
-    Route::post('/posts/{post:id}', [AuthPostController::class, 'update'])->name('profile.posts.update');
+    Route::patch('/posts/{post:id}', [AuthPostController::class, 'update'])->name('profile.posts.update');
+    Route::delete('/posts/{post:id}/delete', [AuthPostController::class, 'destroy'])->name('profile.posts.delete');
 
 });
 

@@ -52,4 +52,11 @@ class AuthPostController
     {
         return view('posts.create');
     }
+
+    public function destroy(Post $post)
+    {
+        $post->delete();
+
+        return back()->with('success', 'Post Deleted!');
+    }
 }

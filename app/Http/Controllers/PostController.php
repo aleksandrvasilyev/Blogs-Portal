@@ -25,7 +25,7 @@ class PostController extends Controller
 
     public function show(User $user, Post $post)
     {
-        $post = Post::where('user_id', $user->id)->where('slug', $post->slug)->firstOrFail();
+        $post = Post::where('user_id', $user->id)->where('slug', $post->slug)->where('status', 'published')->firstOrFail();
         return view('posts.show', compact('post'));
     }
 }

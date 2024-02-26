@@ -3,6 +3,8 @@
 namespace Tests\Feature\Post;
 
 
+use App\Models\Post;
+use App\Models\User;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Tests\TestCase;
 
@@ -15,6 +17,21 @@ class UsersPostTest extends TestCase
     // his posts
         // positive
             // C // test_user_can_create_a_post_with_valid_data
+    public function test_user_can_create_a_post_with_valid_data()
+    {
+        $this->withoutExceptionHandling(); // show exceptions!
+        $user = User::factory()->create();
+        $post = Post::factory()->raw();
+
+        $this->actingAs($user)->post(route('profile.posts.store'), $post);
+
+        $this->assertDatabaseHas('posts', [
+            'title' => $post['title'],
+            'slug' => $post['slug'],
+        ]);
+
+        $this->get(route('posts.index'))->assertSee($post['title']);
+    }
             // R // test_user_can_view_edit_form_for_his_post
             // U // test_user_can_update_his_post
             // D // test_user_can_delete_his_post
