@@ -3,12 +3,13 @@
 namespace App\Models;
 
 use App\Traits\Followable;
+use App\Traits\Hideable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Tag extends Model
 {
-    use HasFactory, Followable;
+    use HasFactory, Followable, Hideable;
 
     public function posts()
     {
@@ -23,5 +24,6 @@ class Tag extends Model
     {
         return $this->morphMany(Follow::class, 'followable');
     }
+
 
 }

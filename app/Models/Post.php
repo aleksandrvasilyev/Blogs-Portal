@@ -12,7 +12,7 @@ class Post extends Model
 {
     use HasFactory, Likeable;
 
-    protected $fillable = ['title', 'slug', 'excerpt', 'body', 'category_id', 'status', 'views', 'pinned', 'edited', 'thumbnail'];
+    protected $fillable = ['title', 'slug', 'excerpt', 'body', 'category_id', 'group_id', 'status', 'views', 'pinned', 'edited', 'thumbnail'];
 
     /**
      * Get the path to the post.

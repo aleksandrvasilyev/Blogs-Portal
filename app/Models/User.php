@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Traits\Followable;
+use App\Traits\Hideable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -11,7 +13,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, Followable, Hideable;
 
 
 //    public function getRouteKeyName(): string
@@ -80,23 +82,36 @@ class User extends Authenticatable implements JWTSubject
 
     public function follows()
     {
-        return $this->hasMany(Follow::class);
+        return $this->morphMany(Follow::class, 'followable');
+    }
+    public function followedUsers()
+    {
+        return $this->morphMany(Follow::class, 'followable');
+    }
+
+    public function followers()
+    {
+        return $this->morphMany(Follow::class, 'followable');
     }
 
     public function favorites()
     {
         return $this->hasMany(Favorite::class);
     }
+
     public function hides()
     {
-        return $this->hasMany(Hide::class);
+        return $this->morphMany(Hide::class, 'hideable');
+    }
+    public function hidededUsers()
+    {
+        return $this->morphMany(Hide::class, 'hideable');
     }
 
-//    public function hided()
-//    {
-//        return $this->morphMany(Hide::class, 'hideable');
-//    }
-
+    public function hideders()
+    {
+        return $this->morphMany(Hide::class, 'hideable');
+    }
 
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
@@ -117,4 +132,6 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+
 }

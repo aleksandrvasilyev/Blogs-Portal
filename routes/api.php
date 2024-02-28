@@ -1,26 +1,18 @@
 <?php
 
+use App\Http\Controllers\Api\AchievementController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\Api\FavoriteController;
 use App\Http\Controllers\Api\FollowController;
+use App\Http\Controllers\Api\GroupController;
+use App\Http\Controllers\Api\HideController;
 use App\Http\Controllers\Api\LikeController;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\TagController;
 use Illuminate\Support\Facades\Route;
-
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
-*/
 
 Route::group(['prefix' => 'v1'], function () {
     Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
@@ -48,7 +40,6 @@ Route::group(['middleware' => 'auth:api', 'prefix' => 'v1'], function () {
     Route::patch('/posts/{post}/comments/{comment}', [CommentController::class, 'update'])->name('comments.update');
     Route::delete('/posts/{post}/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
 
-
     Route::post('/posts/{post}/favorite', [FavoriteController::class, 'store']);
     Route::delete('/posts/{post}/favorite', [FavoriteController::class, 'destroy']);
 
@@ -57,20 +48,15 @@ Route::group(['middleware' => 'auth:api', 'prefix' => 'v1'], function () {
 
     Route::post('/like/{type}/{id}', [LikeController::class, 'toggleLike'])->name('like.toggle');
     Route::post('/follow/{type}/{id}', [FollowController::class, 'toggleFollow'])->name('follow.toggle');
+    Route::post('/hide/{type}/{id}', [HideController::class, 'toggleHide'])->name('hide.toggle');
 
+    Route::post('/groups', [GroupController::class, 'store'])->name('groups.store');
+    Route::delete('/groups/{group}', [GroupController::class, 'destroy'])->name('groups.destroy');
 
-    // новые
-    Route::post('/hide/{type}/{id}', [HideController::class, 'toggleHide'])->name('hide.toggle'); // как лайк и follow
+    Route::post('/groups/{group}/posts/{post}', [GroupController::class, 'add'])->name('groups.posts.add');
+    Route::delete('/groups/{group}/posts/{post}', [GroupController::class, 'remove'])->name('groups.posts.remove');
+    Route::get('/groups/{group}', [GroupController::class, 'show'])->name('groups.posts.show');
 
-    Route::post('/groups/', [GroupController::class, 'store'])->name('groups.store'); // Добавить новую группу постов
-    Route::delete('/groups/{group}', [GroupController::class, 'destroy'])->name('groups.destroy'); // Удалить группу постов
-
-    Route::post('/groups/{group}/posts/{post}', [GroupController::class, 'add'])->name('groups.posts.add'); // Добавить пост в группу
-    Route::delete('/groups/{group}/posts/{post}', [GroupController::class, 'remove'])->name('groups.posts.remove'); // Удалить пост из группы
-
-    Route::post('/achievements/users/{user}', [AchievementController::class, 'store'])->name('achievements.store'); // присвоить ачивку пользователю
-    Route::delete('/achievements/users/{user}', [AchievementController::class, 'destroy'])->name('achievements.destroy'); // удалить ачивку у пользователя
-    // новые
 
 });
 

@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 
+use App\Http\Controllers\Controller;
 use App\Models\Comment;
 use App\Models\Post;
 
-class LikeController
+class LikeController extends Controller
 {
-
     public function toggleLike($type, $id)
     {
         if (!in_array($type, ['post', 'comment'])) {
