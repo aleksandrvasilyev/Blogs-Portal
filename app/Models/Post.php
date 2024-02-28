@@ -2,27 +2,53 @@
 
 namespace App\Models;
 
+use App\Traits\Likeable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Str;
 
 class Post extends Model
 {
-    use HasFactory;
+    use HasFactory, Likeable;
 
-    protected $guarded = [];
+    protected $fillable = ['title', 'slug', 'excerpt', 'body', 'category_id', 'status', 'views', 'pinned', 'edited', 'thumbnail'];
 
-    public function path()
+    /**
+     * Get the path to the post.
+     *
+     * @return string
+     */
+    public function path(): string
     {
-        return '/'.$this->author->username.'/'.$this->slug;
+        return '/' . $this->author->username . '/' . $this->slug;
     }
 
-    public function author()
+    public function setSlugAttribute($value)
+    {
+        $this->attributes['slug'] = Str::slug($value);
+    }
+    public function setTitleAttribute($value)
+    {
+        $this->attributes['title'] = $value;
+        $this->attributes['slug'] = Str::slug($value);
+    }
+    /**
+     * Get the user that authored the post.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function author(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function category()
+    /**
+     * Get the post category.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }

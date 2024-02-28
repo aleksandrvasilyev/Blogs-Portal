@@ -11,7 +11,7 @@ class AuthPostController
 {
     public function store(StorePostRequest $request)
     {
-        dd(request()->all());
+//        dd(request()->all());
         $request->validated()['user_id'] = auth()->user();
 
         auth()->user()->posts()->create($request->validated());
@@ -22,7 +22,7 @@ class AuthPostController
     public function edit(Post $post)
     {
         $post = Post::where('user_id', auth()->user()->id)->where('id', $post->id)->firstOrFail();
-        return view('posts.edit', compact('post'));
+        return view('dashboard.edit', compact('post'));
 
     }
 
@@ -32,25 +32,24 @@ class AuthPostController
         return view('posts.show', compact('post'));
     }
 
-    public function update(UpdatePostRequest $request)
+    public function update(UpdatePostRequest $request, Post $post)
     {
 
-        $post = Post::where('user_id', auth()->user()->id)->where('id', $request->id)->firstOrFail();
+        $attributes = $request->validated();
 
-//        if ($attributes['thumbnail'] ?? false) {
-//            $attributes['thumbnail'] = request()->file('thumbnail')->store('thumbnails');
-//        }
+        if ($attributes['thumbnail'] ?? false) {
+            $attributes['thumbnail'] = request()->file('thumbnail')->store('thumbnails');
+        }
 
-        $post->update($request->validated());
+        $post->update($attributes);
 
         return back()->with('success', 'Post Updated!');
-
 
     }
 
     public function create()
     {
-        return view('posts.create');
+        return view('dashboard.create');
     }
 
     public function destroy(Post $post)

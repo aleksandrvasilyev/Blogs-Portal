@@ -16,7 +16,7 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
-        return view('profile.edit', [
+        return view('dashboard.profile-edit', [
             'user' => $request->user(),
         ]);
     }
@@ -60,8 +60,8 @@ class ProfileController extends Controller
 
     public function index()
     {
-        $posts = auth()->user()->posts()->paginate(10);
-        return view('dashboard', [
+        $posts = auth()->user()->posts()->orderBy('updated_at', 'desc')->paginate(10);
+        return view('dashboard.index', [
             'posts' => $posts,
         ]);
 

@@ -14,11 +14,7 @@ class StorePostRequest extends FormRequest
      */
     public function authorize(): bool
     {
-
-        if(!auth()->user()) {
-            return false;
-        }
-        return true;
+        return auth()->check();
     }
 
     /**
@@ -28,16 +24,13 @@ class StorePostRequest extends FormRequest
      */
     public function rules(): array
     {
-
-//        dd(request()->pinned);
         if(request()->pinned === 'false') {
-//            dd('dad');
             request()->pinned = false;
         }
         return [
             'title' => 'required|string|max:255',
             'body' => 'required|string',
-            'slug' => ['required', 'string', 'max:255', Rule::unique(Post::class)],
+            'slug' => ['string', 'max:255', Rule::unique(Post::class)],
             'user_id' => 'integer',
             'category_id' => 'integer',
             'thumbnail' => 'image',

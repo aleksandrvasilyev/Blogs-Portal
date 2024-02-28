@@ -1,4 +1,6 @@
-<x-layout>
+@extends('blog.layout')
+@section('blog-content')
+
     <main class="col-span-10">
         <div class="">
             <ul role="list" class="space-y-4">
@@ -6,4 +8,5 @@
             </ul>
         </div>
     </main>
-</x-layout>
+@endsection
+

@@ -1,4 +1,6 @@
-<x-layout>
+@extends('blog.layout')
+@section('blog-content')
+
     <main class="lg:col-span-9 xl:col-span-7">
         @include('components.sort-by')
         <div class="mt-4 mb-4">
@@ -7,10 +9,8 @@
                     <x-post-small :post="$post"></x-post-small>
                 @endforeach
             </ul>
-
         </div>
-
         {{ $posts->links() }}
     </main>
     @include('components.aside')
-</x-layout>
+@endsection

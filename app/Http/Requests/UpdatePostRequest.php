@@ -13,11 +13,11 @@ class UpdatePostRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        if(!Post::where('user_id', auth()->user()->id)->where('id', request()->id)->firstOrFail()) {
-            return false;
-        }
-
-        return true;
+//        dd($this->route('post')->id);
+//        $post = $this->route('post');
+        $post = Post::find($this->route('post')->id);
+//        dd($post);
+        return $post && $post->author->id == auth()->id();
     }
 
     /**
@@ -27,10 +27,14 @@ class UpdatePostRequest extends FormRequest
      */
     public function rules(): array
     {
+//        dd(request()['pinned']);
+//        request()['pinned'] = filter_var(request()['pinned'], FILTER_VALIDATE_BOOLEAN);
+
         return [
             'title' => 'required|string|max:255',
             'body' => 'required|string',
-            'slug' => ['required', 'string', 'max:255', Rule::unique(Post::class)->ignore($this->id)],
+            'thumbnail' => 'image',
+            'slug' => ['string', 'max:255', Rule::unique(Post::class)->ignore($this->id)],
             'user_id' => 'integer',
             'category_id' => 'integer',
             'status' => 'string',

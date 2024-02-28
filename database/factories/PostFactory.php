@@ -25,7 +25,7 @@ class PostFactory extends Factory
             'user_id' => User::factory(),
             'category_id' => Category::factory(),
             'group_id' => Group::factory(),
-            'excerpt' => fake()->paragraph(),
+//            'excerpt' => fake()->paragraph(),
             'body' => fake()->paragraphs(10, true),
             'thumbnail' => fake()->imageUrl(640, 640, 'post'),
             'status' => 'published',

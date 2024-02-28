@@ -105,16 +105,16 @@ Heroicon name: outline/x-mark" x-state:on="Menu open" x-state:off="Menu closed" 
                         role="menu" aria-orientation="vertical"
                         aria-labelledby="user-menu-button" tabindex="-1">
 
-                        <a href="{{ route('dashboard') }}" class="block py-2 px-4 text-sm text-gray-700"
+                        <a href="{{ route('dashboard') }}" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100"
                            role="menuitem" tabindex="-1"
                            id="user-menu-item-0">Dashboard</a>
 
-                        <a href="{{ route('profile.edit') }}" class="block py-2 px-4 text-sm text-gray-700"
+                        <a href="{{ route('profile.edit') }}" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100"
                            role="menuitem" tabindex="-1"
                            id="user-menu-item-0">Your Profile</a>
 
                         <a href="{{ route('logout') }}"
-                           class="block py-2 px-4 text-sm text-gray-700"
+                           class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100"
                            role="menuitem" tabindex="-1"
                            id="user-menu-item-0"
                            x-data="{}"

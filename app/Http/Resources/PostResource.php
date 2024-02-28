@@ -26,6 +26,7 @@ class PostResource extends JsonResource
             'edited' => (bool) $this->edited,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'user_id' => $this->author->id,
             'author' => new AuthorResource($this->whenLoaded('author')),
             'category' => new CategoryResource($this->whenLoaded('category')),
             'group' => new GroupResource($this->whenLoaded('group')),

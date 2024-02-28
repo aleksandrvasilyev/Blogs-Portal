@@ -5,7 +5,15 @@
                 <div class="col-span-6">
                     <a class="text-2xl" href="{{ $post->path() }}">{{ $post->title }}</a>
                 </div>
-                <div class="col-span-3">{{ $post->status }}</div>
+                <div class="col-span-3">
+                    @if($post->status === 'published')
+                        <span
+                            class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">{{ $post->status }}</span>
+                    @else
+                        <span
+                            class="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300">{{ $post->status }}</span>
+                    @endif
+                </div>
                 <div class="col-span-1">
                     <a
                         class="rounded-md border border-transparent bg-gray-400 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-gray-500"

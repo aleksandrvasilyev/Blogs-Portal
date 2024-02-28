@@ -98,7 +98,7 @@
             </h2>
         </div>
         <div class="mt-2 space-y-4 text-sm text-gray-700">
-            <p>{{ $post->body }}</p>
+            <p>{!! $post->body !!}</p>
 
             @if($post->tags)
                 <div class="mt-3">

@@ -1,19 +1,22 @@
-@props(['post', 'route'])
+@props(['post', 'route', 'method'])
 
 <li class="bg-white px-4 py-6 shadow sm:rounded-lg sm:p-6">
     <article>
         <div class="flex items-center">
             <div class="mx-auto w-full">
-                <form action="{{ $route }}" method="POST">
+                <form action="{{ $route }}" method="POST" enctype="multipart/form-data">
                     @csrf
+                    @method($method)
+
                     <input type="hidden" name="id" value="{{ $post->id ?? '' }}">
                     <input type="hidden" name="views" value="{{ $post->views ?? 1 }}">
-                    <input type="hidden" name="pinned" value="{{ $post->pinned ?? false }}">
+                    <input type="hidden" name="pinned" value="0">
+                    <input type="hidden" name="edited" value="0">
 
                     <x-form.input name="title" type="text" :value="old('title', $post->title ?? '')"/>
-                    <x-form.input name="slug" type="text" :value="old('slug', $post->slug ?? '')"/>
+                    {{--                    <x-form.input name="slug" type="text" :value="old('slug', $post->slug ?? '')"/>--}}
 
-                    <x-form.textarea name="excerpt">{{ old('excerpt', $post->excerpt ?? '') }}</x-form.textarea>
+                    {{--                    <x-form.textarea name="excerpt">{{ old('excerpt', $post->excerpt ?? '') }}</x-form.textarea>--}}
                     <x-form.textarea name="body">{{ old('excerpt', $post->body ?? '') }}</x-form.textarea>
 
 
@@ -50,13 +53,19 @@
                                 Thumbnail
                             </label>
                             <input
+                                name="thumbnail"
                                 id="thumbnail"
                                 type="file"
                                 class="text-sm mt-3 w-full cursor-pointer rounded-lg border-[1.5px] border-stroke dark:border-dark-3 font-medium text-body-color dark:text-dark-6 outline-none transition file:mr-5 file:border-collapse file:cursor-pointer file:border-0 file:border-r file:border-solid file:border-stroke dark:file:border-dark-3 file:bg-[#F5F7FD] dark:file:bg-dark-2 file:py-3 file:px-5 file:text-body-color dark:file:text-dark-6 file:hover:bg-primary file:hover:bg-opacity-10 focus:border-primary active:border-primary disabled:cursor-default disabled:bg-[#F5F7FD]"
                             />
                         </div>
                         <div class="lg:col-span-1 pl-2">
-                            <img alt="" src="{{ $post->thumbnail ?? '' }}">
+
+                            @if(isset($post) && str_starts_with($post->thumbnail, 'http'))
+                                <img alt="" src="{{ $post->thumbnail ?? '' }}">
+                            @elseif(isset($post))
+                                <img alt="" src="{{ asset('storage/'. $post->thumbnail) ?? '' }}">
+                            @endif
                         </div>
                     </div>
 
@@ -66,7 +75,6 @@
                                 class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 name="status"
                         >
-                            <option selected>Status</option>
                             <option value="published"
                                     @if(isset($post) && $post->status === 'published') selected @endif>Published
                             </option>

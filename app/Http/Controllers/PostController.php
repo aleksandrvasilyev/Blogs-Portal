@@ -20,12 +20,12 @@ class PostController extends Controller
     public function index()
     {
         $posts = $this->postService->index();
-        return view('posts.index', compact('posts'));
+        return view('blog.index', compact('posts'));
     }
 
     public function show(User $user, Post $post)
     {
         $post = Post::where('user_id', $user->id)->where('slug', $post->slug)->where('status', 'published')->firstOrFail();
-        return view('posts.show', compact('post'));
+        return view('blog.show', compact('post'));
     }
 }
