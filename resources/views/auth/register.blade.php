@@ -1,4 +1,9 @@
-<x-guest-layout>
+@extends('components.layout')
+
+@section('content')
+    <main class="col-span-12">
+        <div class="mt-0 mb-4 bg-white p-10">
+            <div class="mb-5 text-xl">Register</div>
     <form method="POST" action="{{ route('register') }}">
         @csrf
 
@@ -51,9 +56,11 @@
                 {{ __('Already registered?') }}
             </a>
 
-            <x-primary-button class="ms-4">
+            <x-primary-button class="ms-4 ml-3">
                 {{ __('Register') }}
             </x-primary-button>
         </div>
     </form>
-</x-guest-layout>
+    </div>
+    </main>
+@endsection

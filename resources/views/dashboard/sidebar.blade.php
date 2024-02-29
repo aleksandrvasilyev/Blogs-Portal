@@ -18,10 +18,14 @@
                 <span class="truncate">Your Profile</span>
             </a>
 
-            <a href="#"
+            <a href="#" x-data="{}" @click.prevent="document.querySelector('#logout-form').submit()"
                class="text-gray-700 hover:bg-gray-50 group flex items-center px-3 py-2 text-sm font-medium rounded-md">
                 <span class="truncate">Log Out</span>
             </a>
+
+            <form id="logout-form" method="POST" action="/logout" class="hidden">
+                @csrf
+            </form>
 
 
         </div>

@@ -32,6 +32,11 @@ class DatabaseSeeder extends Seeder
 
         $users = User::factory(10)->create();
 
+        $firstUser = $users->first();
+        $firstUser->email = 'admin@example.com';
+        $firstUser->password = bcrypt('password');
+        $firstUser->save();
+
 //        $groups = Group::factory(50)->recycle($users)->create();
 
         $posts = Post::factory(100)->recycle($users)->recycle($categories)->create();

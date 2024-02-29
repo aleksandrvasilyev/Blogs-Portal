@@ -119,7 +119,7 @@ Heroicon name: outline/x-mark" x-state:on="Menu open" x-state:off="Menu closed" 
                            id="user-menu-item-0"
                            x-data="{}"
                            @click.prevent="document.querySelector('#logout-form').submit()"
-                        >Sign Out</a>
+                        >Log Out</a>
 
                         <form id="logout-form" method="POST" action="/logout" class="hidden">
                             @csrf

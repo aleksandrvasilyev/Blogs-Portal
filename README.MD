@@ -25,26 +25,33 @@ Generate key
 php artisan key:generate
 ```
 
-Run the web server
-
-```
-php artisan serve
-```
-
 Create sqlite database
 
 ```
 touch database/database.sqlite
 ```
 
-Make migration with seed
+Migrate with seed
 
 ```
 php artisan migrate:fresh --seed
+```
+
+Run the web server
+
+```
+php artisan serve
 ```
 
 That's it. Now you can use the api, i.e.
 
 ```
 http://127.0.0.1:8000/api/documentation
+```
+
+Or you can log in using this data
+
+```
+login: admin@example.com
+password: password
 ```
