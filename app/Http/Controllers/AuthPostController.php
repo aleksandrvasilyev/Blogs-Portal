@@ -26,12 +26,6 @@ class AuthPostController
 
     }
 
-    public function show(User $user, Post $post)
-    {
-        $post = Post::where('user_id', $user->id)->where('slug', $post->slug)->firstOrFail();
-        return view('posts.show', compact('post'));
-    }
-
     public function update(UpdatePostRequest $request, Post $post)
     {
 

@@ -24,10 +24,6 @@ class Post extends Model
         return '/' . $this->author->username . '/' . $this->slug;
     }
 
-    public function setSlugAttribute($value)
-    {
-        $this->attributes['slug'] = Str::slug($value);
-    }
     public function setTitleAttribute($value)
     {
         $this->attributes['title'] = $value;

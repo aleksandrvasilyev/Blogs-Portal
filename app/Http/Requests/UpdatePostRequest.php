@@ -13,10 +13,7 @@ class UpdatePostRequest extends FormRequest
      */
     public function authorize(): bool
     {
-//        dd($this->route('post')->id);
-//        $post = $this->route('post');
         $post = Post::find($this->route('post')->id);
-//        dd($post);
         return $post && $post->author->id == auth()->id();
     }
 
@@ -27,14 +24,11 @@ class UpdatePostRequest extends FormRequest
      */
     public function rules(): array
     {
-//        dd(request()['pinned']);
-//        request()['pinned'] = filter_var(request()['pinned'], FILTER_VALIDATE_BOOLEAN);
-
         return [
             'title' => 'required|string|max:255',
             'body' => 'required|string',
             'thumbnail' => 'image',
-            'slug' => ['string', 'max:255', Rule::unique(Post::class)->ignore($this->id)],
+            'slug' => ['string', 'max:255', Rule::unique(Post::class)->ignore($this->route('post')->id)],
             'user_id' => 'integer',
             'category_id' => 'integer',
             'status' => 'string',

@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\AchievementController;
+
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\CommentController;
@@ -33,7 +33,9 @@ Route::group(['prefix' => 'v1'], function () {
 Route::group(['middleware' => 'auth:api', 'prefix' => 'v1'], function () {
 
     Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
+
     Route::patch('/posts/{post}', [PostController::class, 'update'])->name('posts.update');
+
     Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
 
     Route::post('/posts/{post}/comments', [CommentController::class, 'store'])->name('comments.store');
@@ -56,7 +58,6 @@ Route::group(['middleware' => 'auth:api', 'prefix' => 'v1'], function () {
     Route::post('/groups/{group}/posts/{post}', [GroupController::class, 'add'])->name('groups.posts.add');
     Route::delete('/groups/{group}/posts/{post}', [GroupController::class, 'remove'])->name('groups.posts.remove');
     Route::get('/groups/{group}', [GroupController::class, 'show'])->name('groups.posts.show');
-
 
 });
 

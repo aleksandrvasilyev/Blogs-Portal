@@ -34,9 +34,16 @@ class PostController extends Controller
 
     public function update(UpdatePostRequest $request, Post $post)
     {
-        dd(request()->all());
         $this->authorize('update', $post);
-        $updated = $post->update($request->validated());
+
+        $attributes = $request->validated();
+
+        if ($attributes['thumbnail'] ?? false) {
+            $attributes['thumbnail'] = request()->file('thumbnail')->store('thumbnails');
+        }
+
+        $updated = $post->update($attributes);
+
         return response()->json($updated ? PostResource::make($post) : ['message' => 'Update failed'], $updated ? 200 : 400);
     }
 
