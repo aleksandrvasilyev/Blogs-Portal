@@ -8,8 +8,8 @@ Make sure you have PHP and Composer installed globally on your computer.
 Clone the repo and enter the project folder
 
 ```
-git clone ...
-cd ...
+git clone https://github.com/aleksandrvasilyev/Blogs-Portal.git
+cd Blogs-Portal
 ```
 
 Install the app
@@ -18,7 +18,10 @@ Install the app
 composer install
 cp .env.example .env
 ```
-
+Generate key
+```
+php artisan key:generate
+```
 Run the web server
 
 ```
