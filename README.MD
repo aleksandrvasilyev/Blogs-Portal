@@ -18,14 +18,29 @@ Install the app
 composer install
 cp .env.example .env
 ```
+
 Generate key
+
 ```
 php artisan key:generate
 ```
+
 Run the web server
 
 ```
 php artisan serve
+```
+
+Create sqlite database
+
+```
+touch database/database.sqlite
+```
+
+Make migration with seed
+
+```
+php artisan migrate:fresh --seed
 ```
 
 That's it. Now you can use the api, i.e.
